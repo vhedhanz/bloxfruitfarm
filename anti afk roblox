@@ -54,7 +54,7 @@ local bb=game:service'VirtualUser'
 game:service'Players'.LocalPlayer.Idled:connect(function()
 bb:CaptureController()
 bb:ClickButton2(Vector2.new())
-ab.Text="Roblox mencoba mengusirmu, tapi aku tidak membiarkannya"
+ab.Text="jangan usir aku roblox !"
 wait(2)
 ab.Text="Status : Active"
 end)
