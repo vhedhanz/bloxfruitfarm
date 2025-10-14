@@ -1,63 +1,41 @@
--- ===============================================
--- SKRIP PERBAIKAN STABILITAS (V5)
--- ===============================================
-
-task.wait(0.1) -- Tunggu sebentar untuk memastikan layanan dimuat
-
--- ====================
--- INISIALISASI LAYANAN
--- ====================
-local Players = game:GetService('Players')
-local RunService = game:GetService('RunService')
-local VirtualUser = game:GetService('VirtualUser') -- Untuk Anti-AFK
-
-local LocalPlayer = Players.LocalPlayer
-if not LocalPlayer then return end -- Hentikan skrip jika LocalPlayer belum ada
+wait(0.5) 
 
 -- ====================
 -- INISIALISASI INSTANCE
 -- ====================
+local ba=Instance.new("ScreenGui") 
+local ca=Instance.new("TextLabel")  -- Header (Draggable)
+local da=Instance.new("Frame")      -- Kotak Konten (Diperbesar)
+local _b=Instance.new("TextLabel")  -- Credit
+local ab=Instance.new("TextLabel")  -- Status Anti-AFK
 
-local ba = Instance.new("ScreenGui")
-local ca = Instance.new("TextLabel")  -- Header (Draggable)
-local da = Instance.new("Frame")      -- Kotak Konten
-local _b = Instance.new("TextLabel")  -- Credit
-local ab = Instance.new("TextLabel")  -- Status Anti-AFK
-local FPSText = Instance.new("TextLabel") -- Label untuk FPS
+-- Instance baru untuk Ping dan Close
+local PingText = Instance.new("TextLabel")  -- Label untuk Ping
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
--- Coba pasang di CoreGui, jika gagal akan dipasang di PlayerGui (Fallback)
-local Success, Err = pcall(function()
-    ba.Parent = game:GetService("CoreGui")
-end)
-
-if not Success then
-    -- Jika CoreGui diblokir, pasang di PlayerGui
-    ba.Parent = LocalPlayer:WaitForChild("PlayerGui")
-end
-
-ba.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
 -- ====================
--- PROPERTI GUI
+-- PROPERTI GUI UTAMA & HEADER
 -- ====================
 
--- Header/Jendela Utama (ca)
-ca.Parent = ba
-ca.Active = true
-ca.BackgroundColor3 = Color3.new(0.176471,0.176471,0.176471)
-ca.BackgroundTransparency = 0.4
-ca.Draggable = true
-ca.Position = UDim2.new(0.698610067, 0, 0.098096624, 0)
-ca.Size = UDim2.new(0, 200, 0, 40)
-ca.Font = Enum.Font.SourceSansSemibold 
-ca.Text = "Anti AFK"
-ca.TextColor3 = Color3.new(0, 1, 1)
-ca.TextSize = 22
+ba.Parent=game.CoreGui 
+ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling 
 
--- Tombol Close
+-- Elemen Header (ca) 
+ca.Parent=ba 
+ca.Active=true 
+ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+ca.BackgroundTransparency = 0.5 
+ca.Draggable=true 
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0) 
+ca.Size=UDim2.new(0,200,0,40) 
+ca.Font=Enum.Font.SourceSansSemibold 
+ca.Text="Anti AFK" 
+ca.TextColor3=Color3.new(0,1,1) 
+ca.TextSize=22 
+
+-- Tombol Close (Ditempatkan di pojok kanan Header)
 CloseButton.Parent = ca
-CloseButton.BackgroundColor3 = Color3.new(1, 0, 0)
+CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Merah
 CloseButton.BackgroundTransparency = 0.2
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
 CloseButton.Position = UDim2.new(1, -25, 0.5, -10)
@@ -66,29 +44,79 @@ CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.TextSize = 18
 
--- Frame Konten (da)
-da.Parent = ca
-da.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-da.BackgroundTransparency = 0.4
-da.Position = UDim2.new(0, 0, 1.0192306, 0)
-da.Size = UDim2.new(0, 200, 0, 100)
+-- Elemen Frame (da) - Kotak Konten (Ditingkatkan ukurannya)
+da.Parent=ca 
+da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078) 
+da.BackgroundTransparency = 0.5 
+da.Position=UDim2.new(0,0,1.0192306,0) 
+da.Size=UDim2.new(0,200,0,120) -- Diperbesar untuk Ping
 
--- Status (ab)
-ab.Parent = da
-ab.BackgroundTransparency = 1
-ab.Position = UDim2.new(0, 0, 0.1, 0)
-ab.Size = UDim2.new(0, 200, 0, 30)
-ab.Font = Enum.Font.ArialBold 
-ab.Text = "Status : Active"
-ab.TextColor3 = Color3.new(0, 1, 1)
-ab.TextSize = 20
+-- ====================
+-- ELEMEN KONTEN (STATUS, PING, CREDIT)
+-- ====================
 
--- FPS Label
-FPSText.Parent = da
-FPSText.Size = UDim2.new(1, 0, 0, 20)
-FPSText.Position = UDim2.new(0, 0, 0.45, 0)
-FPSText.BackgroundTransparency = 1
-FPSText.Font = Enum.Font.SourceSans 
-FPSText.Text = "FPS: 60"
-FPSText.TextColor3 = Color3.new(1, 1, 1)
-FPST
+-- Elemen TextLabel (ab) - "Status : Active" 
+ab.Parent=da 
+ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+ab.BackgroundTransparency = 0.5
+ab.Position=UDim2.new(0,0,0.05,0) -- Disesuaikan
+ab.Size=UDim2.new(0,200,0,40) 
+ab.Font=Enum.Font.ArialBold 
+ab.Text="Status : Active" 
+ab.TextColor3=Color3.new(0,1,1) 
+ab.TextSize=20 
+
+-- Elemen TextLabel (PingText) - Ping Status
+PingText.Parent = da
+PingText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
+PingText.BackgroundTransparency = 0.8
+PingText.Position = UDim2.new(0, 0, 0.4, 0) -- Di bawah status
+PingText.Size = UDim2.new(0, 200, 0, 25)
+PingText.Font = Enum.Font.SourceSans
+PingText.Text = "PING: 0 ms"
+PingText.TextColor3 = Color3.new(1, 1, 1)
+PingText.TextSize = 16
+PingText.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Elemen TextLabel (_b) - "Made by VhedhanZ" 
+_b.Parent=da 
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+_b.BackgroundTransparency = 0.5
+_b.Position=UDim2.new(0,0,0.75,0) -- Disesuaikan
+_b.Size=UDim2.new(0,200,0,21) 
+_b.Font=Enum.Font.Arial 
+_b.Text="Made by VhedhanZ" 
+_b.TextColor3=Color3.new(0,1,1) 
+_b.TextSize=20 
+
+-- ====================
+-- LOGIKA FUNGSI
+-- ====================
+
+local bb=game:service'VirtualUser' 
+local Players = game:service'Players'
+local LocalPlayer = Players.LocalPlayer
+
+-- LOGIKA ANTI-AFK (Menggunakan connect() lama)
+LocalPlayer.Idled:connect(function() 
+    bb:CaptureController() 
+    bb:ClickButton2(Vector2.new()) 
+    ab.Text="jangan usir aku roblox !" 
+    wait(2) 
+    ab.Text="Status : Active" 
+end)
+
+-- LOGIKA PING (Diambil dari statistik jaringan pemain)
+-- Fungsi ini berjalan dalam thread terpisah (yield/delay)
+spawn(function()
+    while wait(1) do
+        local pingInSeconds = LocalPlayer:GetNetworkStats().NetworkIn.Ping
+        local pingInMs = math.floor(pingInSeconds * 1000)
+        PingText.Text = "PING: " .. pingInMs .. " ms"
+    end
+end)
+
+-- LOGIKA TOMBOL CLOSE
+CloseButton.MouseButton1Click:connect(function()
+    ba:Destroy() -- Menghancurkan seluruh GUI
+end)
