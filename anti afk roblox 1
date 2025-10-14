@@ -71,7 +71,7 @@ FPSText.TextXAlignment = Enum.TextXAlignment.Center
 -- Elemen TextLabel (_b) - "Made by VhedhanZ" 
 _b.Parent=da 
 _b.BackgroundColor3=Color3.new(0, 0, 0) 
-_b.Position=UDim2.new(0,0,0.75,0) 
+_b.Size=UDim2.new(0,200,0,21) 
 _b.Font=Enum.Font.SourceSans
 _b.Text="Made by VhedhanZ" 
 _b.TextColor3=Color3.new(1, 0, 0)
