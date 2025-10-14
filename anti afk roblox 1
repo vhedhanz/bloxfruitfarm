@@ -16,24 +16,23 @@ local FPSText = Instance.new("TextLabel")  -- Label untuk FPS
 
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
-local Players = game:service'Players'
 
-local LocalPlayer = Players.LocalPlayer
 
-ba.Parent = LocalPlayer:WaitForChild("PlayerGui")
+-- ====================
+
+-- PROPERTI GUI UTAMA & HEADER
+
+-- ====================
+
+
+
+ba.Parent=game.CoreGui 
 
 ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling 
 
 
 
-
 -- Elemen Header (ca) 
-
-local HeaderCorner = Instance.new("UICorner")
-
-HeaderCorner.CornerRadius = UDim.new(0, 6)
-
-HeaderCorner.Parent = ca
 
 ca.Parent=ba 
 
@@ -78,12 +77,6 @@ CloseButton.TextSize = 18
 
 
 -- Elemen Frame (da) - Kotak Konten
-
-local ContentCorner = Instance.new("UICorner")
-
-ContentCorner.CornerRadius = UDim.new(0, 6)
-
-ContentCorner.Parent = da
 
 da.Parent=ca 
 
