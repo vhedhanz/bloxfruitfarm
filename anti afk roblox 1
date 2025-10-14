@@ -75,7 +75,7 @@ FPSText.Size = UDim2.new(0, 200, 0, 25)
 FPSText.Font = Enum.Font.SourceSans
 FPSText.Text = "FPS: 60" -- Teks ini akan diperbarui oleh logika di bawah
 FPSText.TextColor3 = Color3.new(1, 1, 1)
-FPSText.TextSize = 16
+FPSText.TextSize = 20
 FPSText.TextXAlignment = Enum.TextXAlignment.Center
 
 -- Elemen TextLabel (_b) - "Made by VhedhanZ" 
