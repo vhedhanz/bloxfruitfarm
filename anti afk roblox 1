@@ -1,124 +1,224 @@
 wait(0.5) 
 
+
+
 local ba=Instance.new("ScreenGui") 
+
 local ca=Instance.new("TextLabel")  -- Header (Draggable)
+
 local da=Instance.new("Frame")      -- Kotak Konten (Diperbesar)
+
 local _b=Instance.new("TextLabel")  -- Credit
+
 local ab=Instance.new("TextLabel")  -- Status Anti-AFK
+
 local FPSText = Instance.new("TextLabel")  -- Label untuk FPS
+
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
--- ====================
--- PROPERTI GUI UTAMA & HEADER
--- ====================
-
--- PERBAIKAN PENTING: Mengubah parent ke PlayerGui agar GUI tampil
 local Players = game:service'Players'
+
 local LocalPlayer = Players.LocalPlayer
+
 ba.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
 ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling 
 
--- Elemen Header (ca) -- Tambahkan UICorner agar tidak runcing
+
+
+
+-- Elemen Header (ca) 
+
 local HeaderCorner = Instance.new("UICorner")
+
 HeaderCorner.CornerRadius = UDim.new(0, 6)
+
 HeaderCorner.Parent = ca
+
 ca.Parent=ba 
+
 ca.Active=true 
+
 ca.BackgroundColor3=Color3.new(0, 0, 0) 
+
 ca.Draggable=true 
-ca.Position=UDim2.new(0.5, -100, 0.2, 0)
-ca.Size=UDim2.new(0,200,0,25)
+
+ca.Position=UDim2.new(0.698610067,0,0.098096624,0) 
+
+ca.Size=UDim2.new(0,200,0,40) 
+
 ca.Font=Enum.Font.SourceSansSemibold 
-ca.Text="Anti AFK By hassanxzayn"
+
+ca.Text="Anti AFK" 
+
 ca.TextColor3=Color3.new(0,1,1) 
-ca.TextSize=16
+
+ca.TextSize=22 
+
+
 
 -- Tombol Close
+
 CloseButton.Parent = ca
-CloseButton.BackgroundColor3 = Color3.new(0.8, 0, 0) 
-CloseButton.Size = UDim2.new(0, 20, 1, 0)
-CloseButton.Position = UDim2.new(1, -20, 0, 0)
+
+CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) 
+
+CloseButton.Size = UDim2.new(0, 20, 0, 20)
+
+CloseButton.Position = UDim2.new(1, -25, 0.5, -10)
+
 CloseButton.Font = Enum.Font.SourceSansBold
+
 CloseButton.Text = "X"
+
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
+
 CloseButton.TextSize = 18
 
+
+
 -- Elemen Frame (da) - Kotak Konten
+
 local ContentCorner = Instance.new("UICorner")
+
 ContentCorner.CornerRadius = UDim.new(0, 6)
+
 ContentCorner.Parent = da
+
 da.Parent=ca 
+
 da.BackgroundColor3=Color3.new(0, 0, 0) 
-da.Position=UDim2.new(0,0,1,0) 
-da.Size=UDim2.new(0,200,0,75) 
+
+da.Position=UDim2.new(0,0,1.0192306,0) 
+
+da.Size=UDim2.new(0,200,0,120) 
+
+
 
 -- ====================
+
 -- ELEMEN KONTEN (STATUS, FPS, CREDIT)
+
 -- ====================
+
+
 
 -- Elemen TextLabel (ab) - "Status : Active" 
+
 ab.Parent=da 
+
 ab.BackgroundColor3=Color3.new(0, 0, 0) 
-ab.BackgroundTransparency = 1
-ab.Position=UDim2.new(0,0,0,0) 
-ab.Size=UDim2.new(1,0,0.33,0) 
-ab.Font=Enum.Font.SourceSans
+
+ab.Position=UDim2.new(0,0,0.05,0) 
+
+ab.Size=UDim2.new(0,200,0,40) 
+
+ab.Font=Enum.Font.ArialBold 
+
 ab.Text="Status : Active" 
+
 ab.TextColor3=Color3.new(0,1,1) 
-ab.TextSize=14
-ab.TextXAlignment = Enum.TextXAlignment.Left
+
+ab.TextSize=20 
+
+
 
 -- Elemen TextLabel (FPSText) - FPS Status
+
 FPSText.Parent = da
+
 FPSText.BackgroundColor3 = Color3.new(0, 0, 0) 
-FPSText.BackgroundTransparency = 1
-FPSText.Position = UDim2.new(0, 0, 0.33, 0)
-FPSText.Size = UDim2.new(1, 0, 0.33, 0)
+
+FPSText.Position = UDim2.new(0, 0, 0.4, 0) -- DI SINI
+
+FPSText.Size = UDim2.new(0, 200, 0, 25)
+
 FPSText.Font = Enum.Font.SourceSans
-FPSText.Text = "FPS: 0"
+
+FPSText.Text = "FPS: 60" -- Teks ini akan diperbarui oleh logika di bawah
+
 FPSText.TextColor3 = Color3.new(1, 1, 1)
-FPSText.TextSize = 14
-FPSText.TextXAlignment = Enum.TextXAlignment.Left
+
+FPSText.TextSize = 16
+
+FPSText.TextXAlignment = Enum.TextXAlignment.Center
+
+
 
 -- Elemen TextLabel (_b) - "Made by VhedhanZ" 
+
 _b.Parent=da 
+
 _b.BackgroundColor3=Color3.new(0, 0, 0) 
-_b.BackgroundTransparency = 1
-_b.Position = UDim2.new(0, 0, 0.66, 0)
-_b.Size = UDim2.new(1, 0, 0.33, 0)
+
+_b.Position=UDim2.new(0,0,0.75,0) 
+
+_b.Size=UDim2.new(0,200,0,21) 
+
 _b.Font=Enum.Font.SourceSans
+
 _b.Text="Made by VhedhanZ" 
+
 _b.TextColor3=Color3.new(1, 0, 0)
-_b.TextSize=14
-_b.TextXAlignment = Enum.TextXAlignment.Left
+
+_b.TextSize=16
+
+
 
 -- ====================
+
 -- LOGIKA FUNGSI
+
 -- ====================
+
+
 
 local bb=game:service'VirtualUser' 
-local RunService = game:service'RunService' 
+
+local Players = game:service'Players'
+
+local LocalPlayer = Players.LocalPlayer
+
+local RunService = game:service'RunService' -- Diperlukan
+
+
 
 -- LOGIKA ANTI-AFK 
+
 LocalPlayer.Idled:connect(function() 
-    -- DIBUNGKUS pcall untuk mencegah crash
-    pcall(function()
-        bb:CaptureController() 
-        bb:ClickButton2(Vector2.new()) 
-    end)
+
+    bb:CaptureController() 
+
+    bb:ClickButton2(Vector2.new()) 
+
     ab.Text="jangan usir aku roblox !" 
+
     wait(2) 
+
     ab.Text="Status : Active" 
-end)  -- <--- INI ADALAH 'end)' PERTAMA
+
+end)
+
+
 
 -- LOGIKA FPS (Ini adalah fungsi FPS yang diminta)
+
 RunService.Heartbeat:connect(function(step)
+
     -- Menghitung FPS (1 dibagi waktu antar frame)
+
     local fps = math.floor(1 / step)
+
     FPSText.Text = "FPS: " .. fps -- Memperbarui label
-end)  -- <--- INI ADALAH 'end)' KEDUA
+
+end)
+
+
 
 -- LOGIKA TOMBOL CLOSE
+
 CloseButton.MouseButton1Click:connect(function()
+
     ba:Destroy() 
-end)  -- <--- INI ADALAH 'end)' KETIGA
+
+end)
