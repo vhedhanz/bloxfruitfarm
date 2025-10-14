@@ -10,7 +10,7 @@ local _b=Instance.new("TextLabel")  -- Credit
 local ab=Instance.new("TextLabel")  -- Status Anti-AFK
 
 -- Instance baru untuk FPS dan Close
-local FPSText = Instance.new("TextLabel")  -- Label untuk FPS (PENGGANTI PING)
+local FPSText = Instance.new("TextLabel")  -- Label untuk FPS
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
 -- ====================
@@ -33,9 +33,9 @@ ca.Text="Anti AFK"
 ca.TextColor3=Color3.new(0,1,1) 
 ca.TextSize=22 
 
--- Tombol Close (Ditempatkan di pojok kanan Header)
+-- Tombol Close
 CloseButton.Parent = ca
-CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Merah
+CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) 
 CloseButton.BackgroundTransparency = 0.2
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
 CloseButton.Position = UDim2.new(1, -25, 0.5, -10)
@@ -44,7 +44,7 @@ CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.TextSize = 18
 
--- Elemen Frame (da) - Kotak Konten (Ukuran dipertahankan agar FPS muat)
+-- Elemen Frame (da) - Kotak Konten
 da.Parent=ca 
 da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078) 
 da.BackgroundTransparency = 0.5 
@@ -66,6 +66,55 @@ ab.Text="Status : Active"
 ab.TextColor3=Color3.new(0,1,1) 
 ab.TextSize=20 
 
--- Elemen TextLabel (FPSText) - FPS Status (PENGGANTI PING)
+-- Elemen TextLabel (FPSText) - FPS Status
 FPSText.Parent = da
-FPSText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471
+FPSText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
+FPSText.BackgroundTransparency = 0.8
+FPSText.Position = UDim2.new(0, 0, 0.4, 0) -- DI SINI
+FPSText.Size = UDim2.new(0, 200, 0, 25)
+FPSText.Font = Enum.Font.SourceSans
+FPSText.Text = "FPS: 60" -- Teks ini akan diperbarui oleh logika di bawah
+FPSText.TextColor3 = Color3.new(1, 1, 1)
+FPSText.TextSize = 16
+FPSText.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Elemen TextLabel (_b) - "Made by VhedhanZ" 
+_b.Parent=da 
+_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+_b.BackgroundTransparency = 0.5
+_b.Position=UDim2.new(0,0,0.75,0) 
+_b.Size=UDim2.new(0,200,0,21) 
+_b.Font=Enum.Font.Arial 
+_b.Text="Made by VhedhanZ" 
+_b.TextColor3=Color3.new(0,1,1) 
+_b.TextSize=20 
+
+-- ====================
+-- LOGIKA FUNGSI
+-- ====================
+
+local bb=game:service'VirtualUser' 
+local Players = game:service'Players'
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:service'RunService' -- Diperlukan
+
+-- LOGIKA ANTI-AFK 
+LocalPlayer.Idled:connect(function() 
+    bb:CaptureController() 
+    bb:ClickButton2(Vector2.new()) 
+    ab.Text="jangan usir aku roblox !" 
+    wait(2) 
+    ab.Text="Status : Active" 
+end)
+
+-- LOGIKA FPS (Ini adalah fungsi FPS yang diminta)
+RunService.Heartbeat:connect(function(step)
+    -- Menghitung FPS (1 dibagi waktu antar frame)
+    local fps = math.floor(1 / step)
+    FPSText.Text = "FPS: " .. fps -- Memperbarui label
+end)
+
+-- LOGIKA TOMBOL CLOSE
+CloseButton.MouseButton1Click:connect(function()
+    ba:Destroy() 
+end)
