@@ -1,9 +1,15 @@
 -- ====================
--- INISIALISASI INSTANCE
+-- DEFINISI FONT COMIC SANS
 -- ====================
 
+---------------------------------
+
+-- ====================
+-- INISIALISASI INSTANCE
+-- ====================
 wait(0.5) 
 
+local COMIC_SANS = Enum.Font.ComicSans
 local ba=Instance.new("ScreenGui") 
 local ca=Instance.new("TextLabel")  -- Header (Draggable)
 local da=Instance.new("Frame")      -- Kotak Konten 
@@ -22,105 +28,23 @@ ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
 -- Elemen Header (ca) 
 ca.Parent=ba 
 ca.Active=true 
--- *** HITAM PEKAT DAN TIDAK TRANSPARAN ***
 ca.BackgroundColor3=Color3.new(0, 0, 0)         
 ca.BackgroundTransparency = 0                   
---------------------------------------------
 ca.Draggable=true 
 ca.Position=UDim2.new(0.698610067,0,0.098096624,0) 
 ca.Size=UDim2.new(0,200,0,40) 
-ca.Font=Enum.Font.SourceSansSemibold 
+ca.Font=COMIC_SANS -- <--- FONT COMIC SANS
 ca.Text="Anti AFK" 
 ca.TextColor3=Color3.new(0,1,1) 
 ca.TextSize=22 
 
 -- Tombol Close
 CloseButton.Parent = ca
-CloseButton.BackgroundColor3 = Color3.new(0.05, 0.05, 0.05) 
+CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) 
 CloseButton.BackgroundTransparency = 0 
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
 CloseButton.Position = UDim2.new(1, -25, 0.5, -10)
-CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.Font = COMIC_SANS -- <--- FONT COMIC SANS
 CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.TextSize = 18
-
--- Elemen Frame (da) - Kotak Konten 
-da.Parent=ca 
--- *** HITAM GELAP DAN TIDAK TRANSPARAN ***
-da.BackgroundColor3=Color3.new(0.05, 0.05, 0.05) 
-da.BackgroundTransparency = 0                   
---------------------------------------------
-da.Position=UDim2.new(0,0,1.0192306,0) 
-da.Size=UDim2.new(0,200,0,120) 
-
--- ====================
--- ELEMEN KONTEN (STATUS, FPS, CREDIT)
--- MEMASTIKAN SEMUA BACKGROUND TEXT LABEL SEPENUHNYA TRANSPARAN (1.0)
--- ====================
-
--- Elemen TextLabel (ab) - "Status : Active" 
-ab.Parent=da 
--- *** PERBAIKAN: BackgroundTransparency = 1.0 (Tidak ada latar belakang) ***
-ab.BackgroundTransparency = 0 
-ab.BackgroundColor3=Color3.new(0.05, 0.05, 0.05) 
-ab.Position=UDim2.new(0,0,0.05,0) 
-ab.Size=UDim2.new(0,200,0,40) 
-ab.Font=Enum.Font.ComicSans
-ab.Text="Status : Active" 
-ab.TextColor3=Color3.new(0,1,1) 
-ab.TextSize=20 
-
--- Elemen TextLabel (FPSText) - FPS Status
-FPSText.Parent = da
--- *** PERBAIKAN: BackgroundTransparency = 1.0 (Tidak ada latar belakang) ***
-FPSText.BackgroundTransparency = 1.0 
-FPSText.BackgroundColor3 = Color3.new(0.05, 0.05, 0.05)
-FPSText.Position = UDim2.new(0, 0, 0.4, 0)
-FPSText.Size = UDim2.new(0, 200, 0, 25)
-FPSText.Font = Enum.Font.ComicSans
-FPSText.Text = "FPS: 60"
-FPSText.TextColor3 = Color3.new(1, 1, 1)
-FPSText.TextSize = 20
-FPSText.TextXAlignment = Enum.TextXAlignment.Center
-
--- Elemen TextLabel (_b) - "Made by VhedhanZ" 
-_b.Parent=da 
--- *** PERBAIKAN: BackgroundTransparency = 1.0 (Tidak ada latar belakang) ***
-_b.BackgroundTransparency = 1.0 
-_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
-_b.Position=UDim2.new(0,0,0.75,0) 
-_b.Size=UDim2.new(0,200,0,21) 
-_b.Font=Enum.Font.Arial 
-_b.Text="Made by VhedhanZ" 
-_b.TextColor3=Color3.new(0,1,1) 
-_b.TextSize=20 
-
--- ====================
--- LOGIKA FUNGSI
--- ====================
-
-local bb=game:service'VirtualUser' 
-local Players = game:service'Players'
-local LocalPlayer = Players.LocalPlayer
-local RunService = game:service'RunService'
-
--- LOGIKA ANTI-AFK 
-LocalPlayer.Idled:connect(function() 
-    bb:CaptureController() 
-    bb:ClickButton2(Vector2.new()) 
-    ab.Text="jangan usir aku roblox !" 
-    wait(2) 
-    ab.Text="Status : Active" 
-end)
-
--- LOGIKA FPS 
-RunService.Heartbeat:connect(function(step)
-    local fps = math.floor(1 / step)
-    FPSText.Text = "FPS: " .. fps
-end)
-
--- LOGIKA TOMBOL CLOSE
-CloseButton.MouseButton1Click:connect(function()
-    ba:Destroy() 
-end)
