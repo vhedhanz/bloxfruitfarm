@@ -1,5 +1,6 @@
 -- ===============================================
 -- SKRIP GABUNGAN: ANTI-AFK, FPS, & FUNGSI TUTUP
+-- SEMUA TEKS MENGGUNAKAN FONT COMIC SANS
 -- ===============================================
 
 wait(0.5)
@@ -18,6 +19,9 @@ local ab = Instance.new("TextLabel")  -- Status Anti-AFK
 local FPSText = Instance.new("TextLabel") -- Label untuk FPS
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
+-- ** DEFINISI FONT COMIC SANS **
+local COMIC_SANS = Enum.Font.ComicSans
+
 -- ====================
 -- PROPERTI GUI UTAMA (ANTI-AFK)
 -- ====================
@@ -33,7 +37,7 @@ ca.BackgroundTransparency = 0.4
 ca.Draggable = true
 ca.Position = UDim2.new(0.698610067, 0, 0.098096624, 0)
 ca.Size = UDim2.new(0, 200, 0, 40)
-ca.Font = Enum.Font.SourceSansSemibold
+ca.Font = COMIC_SANS -- <--- DIUBAH MENJADI COMIC SANS
 ca.Text = "Anti AFK"
 ca.TextColor3 = Color3.new(0, 1, 1)
 ca.TextSize = 22
@@ -43,8 +47,8 @@ CloseButton.Parent = ca
 CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Warna merah
 CloseButton.BackgroundTransparency = 0.2
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
-CloseButton.Position = UDim2.new(1, -25, 0.5, -10) -- Pojok kanan atas header
-CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.Position = UDim2.new(1, -25, 0.5, -10)
+CloseButton.Font = COMIC_SANS -- <--- DIUBAH MENJADI COMIC SANS
 CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.TextSize = 18
@@ -54,7 +58,7 @@ da.Parent = ca
 da.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
 da.BackgroundTransparency = 0.4
 da.Position = UDim2.new(0, 0, 1.0192306, 0)
-da.Size = UDim2.new(0, 200, 0, 100) -- Diperkecil lagi
+da.Size = UDim2.new(0, 200, 0, 100)
 
 -- ====================
 -- KODE ANTI-AFK (STATUS)
@@ -66,7 +70,7 @@ ab.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
 ab.BackgroundTransparency = 1
 ab.Position = UDim2.new(0, 0, 0.1, 0)
 ab.Size = UDim2.new(0, 200, 0, 30)
-ab.Font = Enum.Font.ArialBold
+ab.Font = COMIC_SANS -- <--- DIUBAH MENJADI COMIC SANS
 ab.Text = "Status : Active"
 ab.TextColor3 = Color3.new(0, 1, 1)
 ab.TextSize = 20
@@ -77,10 +81,10 @@ ab.TextSize = 20
 
 FPSText.Parent = da
 FPSText.Size = UDim2.new(1, 0, 0, 20)
-FPSText.Position = UDim2.new(0, 0, 0.45, 0) -- Di bawah Status
+FPSText.Position = UDim2.new(0, 0, 0.45, 0)
 FPSText.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
 FPSText.BackgroundTransparency = 1
-FPSText.Font = Enum.Font.SourceSans
+FPSText.Font = COMIC_SANS -- <--- DIUBAH MENJADI COMIC SANS
 FPSText.Text = "FPS: 60"
 FPSText.TextColor3 = Color3.new(1, 1, 1)
 FPSText.TextSize = 16
@@ -92,7 +96,7 @@ _b.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
 _b.BackgroundTransparency = 1
 _b.Position = UDim2.new(0, 0, 0.75, 0)
 _b.Size = UDim2.new(0, 200, 0, 21)
-_b.Font = Enum.Font.Arial
+_b.Font = COMIC_SANS -- <--- DIUBAH MENJADI COMIC SANS
 _b.Text = "Made by VhedhanZ"
 _b.TextColor3 = Color3.new(0, 1, 1)
 _b.TextSize = 20
@@ -116,12 +120,11 @@ end)
 
 -- LOGIKA PEMBARUAN FPS
 RunService.Heartbeat:Connect(function(step)
-    -- Perhitungan FPS adalah 1 / step
     local fps = math.floor(1 / step)
     FPSText.Text = "FPS: " .. fps
 end)
 
 -- LOGIKA TOMBOL CLOSE
 CloseButton.MouseButton1Click:Connect(function()
-    ba:Destroy() -- Menghancurkan ScreenGui (ba) dan semua isinya
+    ba:Destroy() 
 end)
