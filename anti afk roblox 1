@@ -1,6 +1,3 @@
--- ====================
--- INISIALISASI INSTANCE
--- ====================
 wait(0.5) 
 
 local ba=Instance.new("ScreenGui") 
@@ -8,8 +5,6 @@ local ca=Instance.new("TextLabel")  -- Header (Draggable)
 local da=Instance.new("Frame")      -- Kotak Konten (Diperbesar)
 local _b=Instance.new("TextLabel")  -- Credit
 local ab=Instance.new("TextLabel")  -- Status Anti-AFK
-
--- Instance baru untuk FPS dan Close
 local FPSText = Instance.new("TextLabel")  -- Label untuk FPS
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
