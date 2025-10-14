@@ -1,8 +1,9 @@
-wait(0.5)
-
 -- ====================
 -- INISIALISASI INSTANCE
 -- ====================
+
+wait(0.5)
+
 local ba = Instance.new("ScreenGui")
 local ca = Instance.new("Frame")            -- Frame Utama (Pengganti TextLabel Draggable)
 local HeaderLabel = Instance.new("TextLabel") -- Label Judul
