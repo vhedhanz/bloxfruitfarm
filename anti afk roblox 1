@@ -1,4 +1,3 @@
-
 -- ====================
 -- INISIALISASI INSTANCE
 -- ====================
@@ -99,4 +98,71 @@ PingText.TextYAlignment = Enum.TextYAlignment.Top
 FpsText.Parent = ContentFrame
 FpsText.BackgroundTransparency = 1
 FpsText.Size = UDim2.new(0.5, 0, 0.5, 0)
-FpsText.Position = UDim2.new(0.5, 0, 0, 0
+FpsText.Position = UDim2.new(0.5, 0, 0, 0)
+FpsText.Font = Enum.Font.SourceSans
+FpsText.Text = "Fps: 0"
+FpsText.TextColor3 = Color3.new(1, 1, 1)
+FpsText.TextSize = 16
+FpsText.TextXAlignment = Enum.TextXAlignment.Right
+FpsText.TextYAlignment = Enum.TextYAlignment.Top
+
+-- Status Anti-AFK (StatusText)
+StatusText.Parent = ContentFrame
+StatusText.BackgroundTransparency = 1
+StatusText.Size = UDim2.new(0.7, 0, 0.5, 0) 
+StatusText.Position = UDim2.new(0, 0, 0.5, 0)
+StatusText.Font = Enum.Font.SourceSans
+StatusText.Text = "Anti-AFK is Enabled"
+StatusText.TextColor3 = Color3.new(1, 1, 1)
+StatusText.TextSize = 16
+StatusText.TextXAlignment = Enum.TextXAlignment.Left
+StatusText.TextYAlignment = Enum.TextYAlignment.Center
+
+-- Timer (TimerText)
+TimerText.Parent = ContentFrame
+TimerText.BackgroundTransparency = 1
+TimerText.Size = UDim2.new(0.3, 0, 0.5, 0) 
+TimerText.Position = UDim2.new(0.7, 0, 0.5, 0)
+TimerText.Font = Enum.Font.SourceSans
+TimerText.Text = "0:0:00"
+TimerText.TextColor3 = Color3.new(1, 1, 1)
+TimerText.TextSize = 16
+TimerText.TextXAlignment = Enum.TextXAlignment.Right
+TimerText.TextYAlignment = Enum.TextYAlignment.Center
+
+-- ====================
+-- LOGIKA FUNGSI
+-- ====================
+
+-- LOGIKA ANTI-AFK
+LocalPlayer.Idled:Connect(function()
+    bb:CaptureController()
+    bb:ClickButton2(Vector2.new())
+    StatusText.Text = "Jangan usir aku Roblox!" 
+    wait(2)
+    StatusText.Text = "Anti-AFK is Enabled" 
+end)
+
+-- LOGIKA UPDATE TAMPILAN
+RunService.Heartbeat:Connect(function(step)
+    -- Update FPS
+    local fps = math.floor(1 / step)
+    FpsText.Text = "Fps: " .. fps
+    
+    -- Update Ping (Latency)
+    local ping = math.floor(LocalPlayer.NetworkPing * 1000)
+    PingText.Text = "Ping: " .. ping
+    
+    -- Update Timer
+    local elapsedTime = tick() - startTime
+    local seconds = math.floor(elapsedTime % 60)
+    local minutes = math.floor((elapsedTime / 60) % 60)
+    local hours = math.floor(elapsedTime / 3600)
+    
+    TimerText.Text = string.format("%d:%02d:%02d", hours, minutes, seconds)
+end)
+
+-- LOGIKA TOMBOL CLOSE
+CloseButton.MouseButton1Click:Connect(function()
+    ba:Destroy()
+end)
