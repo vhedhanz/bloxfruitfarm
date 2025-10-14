@@ -62,4 +62,66 @@ da.Size = UDim2.new(0, 200, 0, 100) -- Diperkecil lagi
 
 -- Elemen TextLabel (ab) - "Status : Active"
 ab.Parent = da
-ab.BackgroundColor3 = Color3.new(0.1
+ab.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
+ab.BackgroundTransparency = 1
+ab.Position = UDim2.new(0, 0, 0.1, 0)
+ab.Size = UDim2.new(0, 200, 0, 30)
+ab.Font = Enum.Font.ArialBold
+ab.Text = "Status : Active"
+ab.TextColor3 = Color3.new(0, 1, 1)
+ab.TextSize = 20
+
+-- ====================
+-- FPS LABEL (Ditempatkan di bawah status)
+-- ====================
+
+FPSText.Parent = da
+FPSText.Size = UDim2.new(1, 0, 0, 20)
+FPSText.Position = UDim2.new(0, 0, 0.45, 0) -- Di bawah Status
+FPSText.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+FPSText.BackgroundTransparency = 1
+FPSText.Font = Enum.Font.SourceSans
+FPSText.Text = "FPS: 60"
+FPSText.TextColor3 = Color3.new(1, 1, 1)
+FPSText.TextSize = 16
+FPSText.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Elemen TextLabel (_b) - "Made by VhedhanZ"
+_b.Parent = da
+_b.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
+_b.BackgroundTransparency = 1
+_b.Position = UDim2.new(0, 0, 0.75, 0)
+_b.Size = UDim2.new(0, 200, 0, 21)
+_b.Font = Enum.Font.Arial
+_b.Text = "Made by VhedhanZ"
+_b.TextColor3 = Color3.new(0, 1, 1)
+_b.TextSize = 20
+
+-- ====================
+-- LOGIKA FUNGSI
+-- ====================
+
+local RunService = game:GetService('RunService')
+local bb = game:GetService('VirtualUser')
+local Players = game:GetService('Players')
+
+-- LOGIKA ANTI-AFK
+Players.LocalPlayer.Idled:Connect(function()
+    bb:CaptureController()
+    bb:ClickButton2(Vector2.new())
+    ab.Text = "jangan usir aku roblox !"
+    wait(2)
+    ab.Text = "Status : Active"
+end)
+
+-- LOGIKA PEMBARUAN FPS
+RunService.Heartbeat:Connect(function(step)
+    -- Perhitungan FPS adalah 1 / step
+    local fps = math.floor(1 / step)
+    FPSText.Text = "FPS: " .. fps
+end)
+
+-- LOGIKA TOMBOL CLOSE
+CloseButton.MouseButton1Click:Connect(function()
+    ba:Destroy() -- Menghancurkan ScreenGui (ba) dan semua isinya
+end)
