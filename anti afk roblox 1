@@ -1,168 +1,26 @@
 -- ===============================================
--- SKRIP GABUNGAN: ANTI-AFK, FPS, & PING DISPLAY
--- Dibuat Berdasarkan Skrip Awal Anda
+-- LOGIKA PEMBARUAN PING MENGGUNAKAN TICK (Metode Alternatif)
+-- Ganti kode "Logika Pembaruan FPS & PING" dengan ini.
 -- ===============================================
 
-wait(0.5)
+local RemoteEvent = game:GetService("ReplicatedStorage"):FindFirstChild("SomeRemoteEvent") -- Coba cari RemoteEvent yang sudah ada
+if not RemoteEvent then
+    -- Jika tidak ada RemoteEvent, buat satu di ReplicatedStorage (hanya jika Anda bisa)
+    -- Namun, membuat objek baru di game lain mungkin tidak diizinkan oleh executor Anda.
+    -- Jadi, jika tidak ada, metode ini mungkin juga gagal.
+end
 
--- ====================
--- INISIALISASI INSTANCE
--- ====================
 
-local ba = Instance.new("ScreenGui")
-local ca = Instance.new("TextLabel") -- Header Anti-AFK (Draggable)
-local da = Instance.new("Frame")     -- Kotak Konten Anti-AFK
-local _b = Instance.new("TextLabel") -- Credit
-local ab = Instance.new("TextLabel") -- Status Anti-AFK
+if RemoteEvent then
+    RemoteEvent.OnClientEvent:Connect(function(startTime)
+        local ping = math.floor((tick() - startTime) * 1000 / 2)
+        PingText.Text = "PING: " .. ping .. " ms (Approx)"
+    end)
 
--- Instance baru untuk FPS & Ping
-local AntiAfkFrame = ca -- Gunakan frame yang sama (ca) sebagai wadah utama untuk GUI yang dapat dipindahkan
-local StatusFrame = da  -- Gunakan frame yang sama (da) sebagai wadah konten utama
-
-local FPSText = Instance.new("TextLabel") -- Label untuk FPS
-local PingText = Instance.new("TextLabel") -- Label untuk Ping
-local InfoFrame = Instance.new("Frame")   -- Frame kecil untuk FPS/Ping di bawah Status
-
--- ====================
--- PROPERTI GUI UTAMA (ANTI-AFK)
--- ====================
-
-ba.Parent = game.CoreGui -- Penting untuk CoreGui agar tidak bisa diakses/dihapus oleh game lain
-ba.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
--- Header/Jendela Utama (ca)
-ca.Parent = ba
-ca.Active = true
-ca.BackgroundColor3 = Color3.new(0.176471,0.176471,0.176471)
-ca.BackgroundTransparency = 0.4 -- Sedikit lebih buram agar kontras
-ca.Draggable = true
-ca.Position = UDim2.new(0.698610067, 0, 0.098096624, 0)
-ca.Size = UDim2.new(0, 200, 0, 40)
-ca.Font = Enum.Font.SourceSansSemibold
-ca.Text = "Anti AFK"
-ca.TextColor3 = Color3.new(0, 1, 1)
-ca.TextSize = 22
-
--- Frame Konten Anti-AFK (da)
-da.Parent = ca
-da.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-da.BackgroundTransparency = 0.4
-da.Position = UDim2.new(0, 0, 1.0192306, 0)
-da.Size = UDim2.new(0, 200, 0, 140) -- Diperlebar untuk menampung info FPS/Ping
-
--- ====================
--- PROPERTI FPS/PING FRAME
--- ====================
-
-InfoFrame.Parent = da
-InfoFrame.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-InfoFrame.BackgroundTransparency = 0.5
-InfoFrame.Position = UDim2.new(0, 0, 0.61, 0) -- Di bawah status
-InfoFrame.Size = UDim2.new(0, 200, 0, 40)
-
--- Layout untuk FPS dan Ping (Opsional, untuk penempatan yang rapi)
-local listLayout = Instance.new("UIListLayout")
-listLayout.Parent = InfoFrame
-listLayout.FillDirection = Enum.FillDirection.Horizontal
-listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-listLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-listLayout.Padding = UDim.new(0, 10) -- Jarak antar item
-
--- ====================
--- FPS LABEL
--- ====================
-
-FPSText.Parent = InfoFrame
-FPSText.Size = UDim2.new(0.4, 0, 1, 0) -- Lebar 40% dari frame InfoFrame
-FPSText.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-FPSText.BackgroundTransparency = 1 -- Transparan
-FPSText.Font = Enum.Font.SourceSans
-FPSText.Text = "FPS: 60"
-FPSText.TextColor3 = Color3.new(1, 1, 1)
-FPSText.TextSize = 16
-FPSText.TextXAlignment = Enum.TextXAlignment.Left
-
--- ====================
--- PING LABEL
--- ====================
-
-PingText.Parent = InfoFrame
-PingText.Size = UDim2.new(0.4, 0, 1, 0) -- Lebar 40% dari frame InfoFrame
-PingText.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
-PingText.BackgroundTransparency = 1 -- Transparan
-PingText.Font = Enum.Font.SourceSans
-PingText.Text = "PING: 0 ms"
-PingText.TextColor3 = Color3.new(1, 1, 1)
-PingText.TextSize = 16
-PingText.TextXAlignment = Enum.TextXAlignment.Right
-
--- ====================
--- KODE ANTI-AFK (DIPINDAHKAN)
--- ====================
-
--- Elemen TextLabel (ab) - "Status : Active"
-ab.Parent = da
-ab.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-ab.BackgroundTransparency = 1 -- Sepenuhnya transparan untuk label ini
-ab.Position = UDim2.new(0, 0, 0.1, 0)
-ab.Size = UDim2.new(0, 200, 0, 40)
-ab.Font = Enum.Font.ArialBold
-ab.Text = "Status : Active"
-ab.TextColor3 = Color3.new(0, 1, 1)
-ab.TextSize = 20
-
--- Elemen TextLabel (_b) - "Made by VhedhanZ"
-_b.Parent = da
-_b.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-_b.BackgroundTransparency = 1 -- Sepenuhnya transparan untuk label ini
-_b.Position = UDim2.new(0, 0, 0.86, 0)
-_b.Size = UDim2.new(0, 200, 0, 21)
-_b.Font = Enum.Font.Arial
-_b.Text = "Made by VhedhanZ"
-_b.TextColor3 = Color3.new(0, 1, 1)
-_b.TextSize = 20
-
--- LOGIKA ANTI-AFK
-local bb = game:GetService('VirtualUser')
-local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local Players = game:GetService('Players')
-
-Players.LocalPlayer.Idled:Connect(function()
-    bb:CaptureController()
-    bb:ClickButton2(Vector2.new())
-    ab.Text = "jangan usir aku roblox !"
-    wait(2)
-    ab.Text = "Status : Active"
-end)
-
--- ====================
--- LOGIKA PEMBARUAN FPS & PING
--- ====================
-
-local RunService = game:GetService('RunService')
-local LocalPlayer = Players.LocalPlayer
-local startTime
-
--- Fungsi untuk memperbarui FPS (Frame Rate)
-RunService.Heartbeat:Connect(function(step)
-    -- Perhitungan FPS adalah 1 / step
-    local fps = math.floor(1 / step)
-    FPSText.Text = "FPS: " .. fps
-end)
-
--- Fungsi untuk memperbarui Ping (Latency)
--- Ping diukur dengan Round-Trip Time ke server.
--- Catatan: Perhitungan ini tidak 100% akurat karena menggunakan statistik,
--- tetapi sangat mendekati angka Ping yang sebenarnya.
-while true do
-    -- Dapatkan Latency NetworkIn (latensi jaringan) dalam detik
-    local pingInSeconds = LocalPlayer:GetNetworkStats().NetworkIn.Ping
-    
-    -- Konversi ke milidetik (ms) dan bulatkan
-    local pingInMs = math.floor(pingInSeconds * 1000)
-    
-    PingText.Text = "PING: " .. pingInMs .. " ms"
-    
-    -- Perbarui setiap 1 detik
-    wait(1) 
+    while true do
+        RemoteEvent:FireServer(tick())
+        wait(1)
+    end
+else
+    PingText.Text = "PING: Error (No Remote)"
 end
