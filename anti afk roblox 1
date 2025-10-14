@@ -44,7 +44,7 @@ CloseButton.TextSize = 18
 
 -- Elemen Frame (da) - Kotak Konten
 da.Parent=ca 
-da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078) 
+da.BackgroundColor3=Color3.new(0, 0, 0) 
 da.Position=UDim2.new(0,0,1.0192306,0) 
 da.Size=UDim2.new(0,200,0,120) 
 
@@ -54,7 +54,7 @@ da.Size=UDim2.new(0,200,0,120)
 
 -- Elemen TextLabel (ab) - "Status : Active" 
 ab.Parent=da 
-ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+ab.BackgroundColor3=Color3.new(0, 0, 0) 
 ab.Position=UDim2.new(0,0,0.05,0) 
 ab.Size=UDim2.new(0,200,0,40) 
 ab.Font=Enum.Font.ArialBold 
@@ -64,7 +64,7 @@ ab.TextSize=20
 
 -- Elemen TextLabel (FPSText) - FPS Status
 FPSText.Parent = da
-FPSText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
+FPSText.BackgroundColor3 = Color3.new(0, 0, 0) 
 FPSText.Position = UDim2.new(0, 0, 0.4, 0) -- DI SINI
 FPSText.Size = UDim2.new(0, 200, 0, 25)
 FPSText.Font = Enum.Font.SourceSans
@@ -75,7 +75,7 @@ FPSText.TextXAlignment = Enum.TextXAlignment.Center
 
 -- Elemen TextLabel (_b) - "Made by VhedhanZ" 
 _b.Parent=da 
-_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+_b.BackgroundColor3=Color3.new(0, 0, 0) 
 _b.Position=UDim2.new(0,0,0.75,0) 
 _b.Size=UDim2.new(0,200,0,21) 
 _b.Font=Enum.Font.Arial 
