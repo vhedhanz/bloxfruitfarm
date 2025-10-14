@@ -1,36 +1,44 @@
+
 -- ====================
 -- INISIALISASI INSTANCE
 -- ====================
-
 wait(0.5)
 
-local ba = Instance.new("ScreenGui")
-local ca = Instance.new("Frame")            -- Frame Utama (Pengganti TextLabel Draggable)
-local HeaderLabel = Instance.new("TextLabel") -- Label Judul
-local CloseButton = Instance.new("TextButton") -- Tombol Close
-local LineSeparator = Instance.new("Frame")    -- Garis Pemisah (Horizontal line)
-local ContentFrame = Instance.new("Frame")     -- Frame Konten Utama
+local Players = game:service'Players'
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:service'RunService' 
+local bb = game:service'VirtualUser' 
 
-local PingText = Instance.new("TextLabel")     -- Label Ping
-local FpsText = Instance.new("TextLabel")      -- Label FPS
-local StatusText = Instance.new("TextLabel")   -- Label Status Anti-AFK
-local TimerText = Instance.new("TextLabel")    -- Label Timer
+-- Perubahan: Menggunakan PlayerGui, ini lebih aman dan umum di Client-Side Scripting
+local ba = Instance.new("ScreenGui")
+ba.Parent = LocalPlayer:WaitForChild("PlayerGui") -- <-- BARIS INI DIGANTI
+ba.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local ca = Instance.new("Frame")            
+local HeaderLabel = Instance.new("TextLabel") 
+local CloseButton = Instance.new("TextButton") 
+local LineSeparator = Instance.new("Frame")    
+local ContentFrame = Instance.new("Frame")     
+
+local PingText = Instance.new("TextLabel")     
+local FpsText = Instance.new("TextLabel")      
+local StatusText = Instance.new("TextLabel")   
+local TimerText = Instance.new("TextLabel")    
+
+local startTime = tick()
 
 -- ====================
 -- PROPERTI GUI UTAMA & FRAME UTAMA
 -- ====================
 
-ba.Parent = game.CoreGui
-ba.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
--- Frame Utama (ca) - Menampung semua elemen, menjadikannya Draggable
+-- Frame Utama (ca)
 ca.Parent = ba
 ca.Active = true
-ca.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078) -- Warna latar belakang gelap
-ca.BackgroundTransparency = 0 -- Transparan di luar header, akan diatur nanti
-ca.Draggable = true -- Memungkinkan Frame dipindahkan
-ca.Position = UDim2.new(0.5, -100, 0.2, 0) -- Tengah ke kiri sedikit, di bagian atas
-ca.Size = UDim2.new(0, 200, 0, 100) -- Ukuran total Frame
+ca.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
+ca.BackgroundTransparency = 0 
+ca.Draggable = true 
+ca.Position = UDim2.new(0.5, -100, 0.2, 0)
+ca.Size = UDim2.new(0, 200, 0, 100)
 
 -- ====================
 -- HEADER DAN TOMBOL CLOSE
@@ -38,21 +46,21 @@ ca.Size = UDim2.new(0, 200, 0, 100) -- Ukuran total Frame
 
 -- Label Judul (HeaderLabel)
 HeaderLabel.Parent = ca
-HeaderLabel.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15) -- Warna Header yang sedikit lebih gelap
+HeaderLabel.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15)
 HeaderLabel.BackgroundTransparency = 0
-HeaderLabel.Size = UDim2.new(1, 0, 0, 25) -- Lebar penuh, tinggi 25
+HeaderLabel.Size = UDim2.new(1, 0, 0, 25)
 HeaderLabel.Font = Enum.Font.SourceSansSemibold
 HeaderLabel.Text = "Anti Afk By hassanxzayn"
-HeaderLabel.TextColor3 = Color3.new(1, 1, 1) -- Teks Putih
+HeaderLabel.TextColor3 = Color3.new(1, 1, 1)
 HeaderLabel.TextSize = 14
 HeaderLabel.TextXAlignment = Enum.TextXAlignment.Center
 
 -- Tombol Close (X)
-CloseButton.Parent = HeaderLabel -- Menjadi anak dari HeaderLabel
-CloseButton.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15) -- Sama seperti header
+CloseButton.Parent = HeaderLabel 
+CloseButton.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15) 
 CloseButton.BackgroundTransparency = 0
-CloseButton.Size = UDim2.new(0, 20, 1, 0) -- Tinggi penuh, lebar 20
-CloseButton.Position = UDim2.new(1, -20, 0, 0) -- Di sudut kanan atas
+CloseButton.Size = UDim2.new(0, 20, 1, 0) 
+CloseButton.Position = UDim2.new(1, -20, 0, 0) 
 CloseButton.Font = Enum.Font.SourceSansBold
 CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
@@ -60,98 +68,35 @@ CloseButton.TextSize = 18
 
 -- Garis Pemisah (LineSeparator)
 LineSeparator.Parent = ca
-LineSeparator.BackgroundColor3 = Color3.new(1, 1, 1) -- Garis Putih
-LineSeparator.Size = UDim2.new(1, 0, 0, 2) -- Lebar penuh, tebal 2 pixel
-LineSeparator.Position = UDim2.new(0, 0, 0, 25) -- Tepat di bawah Header
+LineSeparator.BackgroundColor3 = Color3.new(1, 1, 1)
+LineSeparator.Size = UDim2.new(1, 0, 0, 2)
+LineSeparator.Position = UDim2.new(0, 0, 0, 25)
 
 -- ====================
 -- KONTEN UTAMA (PING, FPS, STATUS, TIMER)
 -- ====================
 
--- Frame Konten (ContentFrame) - Latar belakang utama kotak konten
+-- Frame Konten (ContentFrame) 
 ContentFrame.Parent = ca
-ContentFrame.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078) -- Biru kehitaman
+ContentFrame.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078) 
 ContentFrame.BackgroundTransparency = 0
-ContentFrame.Position = UDim2.new(0, 0, 0, 27) -- Di bawah garis pemisah
-ContentFrame.Size = UDim2.new(1, 0, 0, 73) -- Sisa ruang
+ContentFrame.Position = UDim2.new(0, 0, 0, 27) 
+ContentFrame.Size = UDim2.new(1, 0, 0, 73)
 
 -- PING (PingText)
 PingText.Parent = ContentFrame
-PingText.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
 PingText.BackgroundTransparency = 1
-PingText.Size = UDim2.new(0.5, 0, 0.5, 0) -- Setengah lebar, setengah tinggi (Baris 1 Kiri)
+PingText.Size = UDim2.new(0.5, 0, 0.5, 0)
 PingText.Position = UDim2.new(0, 0, 0, 0)
 PingText.Font = Enum.Font.SourceSans
-PingText.Text = "Ping: 160" -- Default
+PingText.Text = "Ping: 0"
 PingText.TextColor3 = Color3.new(1, 1, 1)
 PingText.TextSize = 16
-PingText.TextXAlignment = Enum.TextXAlignment.Left -- Rata Kiri
+PingText.TextXAlignment = Enum.TextXAlignment.Left
 PingText.TextYAlignment = Enum.TextYAlignment.Top
 
 -- FPS (FpsText)
 FpsText.Parent = ContentFrame
-FpsText.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
 FpsText.BackgroundTransparency = 1
-FpsText.Size = UDim2.new(0.5, 0, 0.5, 0) -- Setengah lebar, setengah tinggi (Baris 1 Kanan)
-FpsText.Position = UDim2.new(0.5, 0, 0, 0)
-FpsText.Font = Enum.Font.SourceSans
-FpsText.Text = "Fps: 10" -- Default
-FpsText.TextColor3 = Color3.new(1, 1, 1)
-FpsText.TextSize = 16
-FpsText.TextXAlignment = Enum.TextXAlignment.Right -- Rata Kanan
-FpsText.TextYAlignment = Enum.TextYAlignment.Top
-
--- Status Anti-AFK (StatusText)
-StatusText.Parent = ContentFrame
-StatusText.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-StatusText.BackgroundTransparency = 1
-StatusText.Size = UDim2.new(0.7, 0, 0.5, 0) -- Lebar 70% (Baris 2 Kiri)
-StatusText.Position = UDim2.new(0, 0, 0.5, 0)
-StatusText.Font = Enum.Font.SourceSans
-StatusText.Text = "Anti-AFK is Enabled"
-StatusText.TextColor3 = Color3.new(1, 1, 1)
-StatusText.TextSize = 16
-StatusText.TextXAlignment = Enum.TextXAlignment.Left -- Rata Kiri
-StatusText.TextYAlignment = Enum.TextYAlignment.Center
-
--- Timer (TimerText)
-TimerText.Parent = ContentFrame
-TimerText.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
-TimerText.BackgroundTransparency = 1
-TimerText.Size = UDim2.new(0.3, 0, 0.5, 0) -- Lebar 30% (Baris 2 Kanan)
-TimerText.Position = UDim2.new(0.7, 0, 0.5, 0)
-TimerText.Font = Enum.Font.SourceSans
-TimerText.Text = "0:0:14" -- Default
-TimerText.TextColor3 = Color3.new(1, 1, 1)
-TimerText.TextSize = 16
-TimerText.TextXAlignment = Enum.TextXAlignment.Right -- Rata Kanan
-TimerText.TextYAlignment = Enum.TextYAlignment.Center
-
--- ====================
--- LOGIKA FUNGSI (Mempertahankan fungsi inti dan menambahkan logika tampilan)
--- ====================
-
-local bb = game:service'VirtualUser'
-local Players = game:service'Players'
-local LocalPlayer = Players.LocalPlayer
-local RunService = game:service'RunService'
-local HttpService = game:service'HttpService' -- Diperlukan untuk Ping (latency)
-local startTime = tick()
-
--- LOGIKA ANTI-AFK (Dipertahankan)
-LocalPlayer.Idled:Connect(function()
-    bb:CaptureController()
-    bb:ClickButton2(Vector2.new())
-    StatusText.Text = "Jangan usir aku Roblox!" -- Pesan sementara
-    wait(2)
-    StatusText.Text = "Anti-AFK is Enabled" -- Kembalikan ke status awal
-end)
-
--- LOGIKA UPDATE TAMPILAN (Ping, FPS, Timer)
-RunService.Heartbeat:Connect(function(step)
-    -- Update FPS
-    local fps = math.floor(1 / step)
-    FpsText.Text = "Fps: " .. fps
-    
-    -- Update Ping (Estimasi Latency)
-    -- Cara termudah untuk mendapatkan ping adalah menggunakan LocalPlayer.NetworkPing
+FpsText.Size = UDim2.new(0.5, 0, 0.5, 0)
+FpsText.Position = UDim2.new(0.5, 0, 0, 0
