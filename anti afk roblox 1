@@ -1,8 +1,8 @@
-wait(0.5) 
-
 -- ====================
 -- INISIALISASI INSTANCE
 -- ====================
+wait(0.5) 
+
 local ba=Instance.new("ScreenGui") 
 local ca=Instance.new("TextLabel")  -- Header (Draggable)
 local da=Instance.new("Frame")      -- Kotak Konten (Diperbesar)
