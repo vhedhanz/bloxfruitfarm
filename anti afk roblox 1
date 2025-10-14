@@ -23,7 +23,7 @@ ba.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
 -- Elemen Header (ca) 
 ca.Parent=ba 
 ca.Active=true 
-ca.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
+ca.BackgroundColor3=Color3.new(0, 0, 0) 
 ca.Draggable=true 
 ca.Position=UDim2.new(0.698610067,0,0.098096624,0) 
 ca.Size=UDim2.new(0,200,0,40) 
