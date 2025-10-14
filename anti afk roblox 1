@@ -1,26 +1,65 @@
 -- ===============================================
--- LOGIKA PEMBARUAN PING MENGGUNAKAN TICK (Metode Alternatif)
--- Ganti kode "Logika Pembaruan FPS & PING" dengan ini.
+-- SKRIP GABUNGAN: ANTI-AFK, FPS, & FUNGSI TUTUP
 -- ===============================================
 
-local RemoteEvent = game:GetService("ReplicatedStorage"):FindFirstChild("SomeRemoteEvent") -- Coba cari RemoteEvent yang sudah ada
-if not RemoteEvent then
-    -- Jika tidak ada RemoteEvent, buat satu di ReplicatedStorage (hanya jika Anda bisa)
-    -- Namun, membuat objek baru di game lain mungkin tidak diizinkan oleh executor Anda.
-    -- Jadi, jika tidak ada, metode ini mungkin juga gagal.
-end
+wait(0.5)
 
+-- ====================
+-- INISIALISASI INSTANCE
+-- ====================
 
-if RemoteEvent then
-    RemoteEvent.OnClientEvent:Connect(function(startTime)
-        local ping = math.floor((tick() - startTime) * 1000 / 2)
-        PingText.Text = "PING: " .. ping .. " ms (Approx)"
-    end)
+local ba = Instance.new("ScreenGui")
+local ca = Instance.new("TextLabel")  -- Header Anti-AFK (Draggable)
+local da = Instance.new("Frame")      -- Kotak Konten Anti-AFK
+local _b = Instance.new("TextLabel")  -- Credit
+local ab = Instance.new("TextLabel")  -- Status Anti-AFK
 
-    while true do
-        RemoteEvent:FireServer(tick())
-        wait(1)
-    end
-else
-    PingText.Text = "PING: Error (No Remote)"
-end
+-- Instance baru untuk FPS & Tombol Close
+local FPSText = Instance.new("TextLabel") -- Label untuk FPS
+local CloseButton = Instance.new("TextButton") -- Tombol Close
+
+-- ====================
+-- PROPERTI GUI UTAMA (ANTI-AFK)
+-- ====================
+
+ba.Parent = game.CoreGui
+ba.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Header/Jendela Utama (ca)
+ca.Parent = ba
+ca.Active = true
+ca.BackgroundColor3 = Color3.new(0.176471,0.176471,0.176471)
+ca.BackgroundTransparency = 0.4
+ca.Draggable = true
+ca.Position = UDim2.new(0.698610067, 0, 0.098096624, 0)
+ca.Size = UDim2.new(0, 200, 0, 40)
+ca.Font = Enum.Font.SourceSansSemibold
+ca.Text = "Anti AFK"
+ca.TextColor3 = Color3.new(0, 1, 1)
+ca.TextSize = 22
+
+-- Tombol Close (Ditempatkan di pojok kanan Header)
+CloseButton.Parent = ca
+CloseButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Warna merah
+CloseButton.BackgroundTransparency = 0.2
+CloseButton.Size = UDim2.new(0, 20, 0, 20)
+CloseButton.Position = UDim2.new(1, -25, 0.5, -10) -- Pojok kanan atas header
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.new(1, 1, 1)
+CloseButton.TextSize = 18
+
+-- Frame Konten Anti-AFK (da)
+da.Parent = ca
+da.BackgroundColor3 = Color3.new(0.196078, 0.196078, 0.196078)
+da.BackgroundTransparency = 0.4
+da.Position = UDim2.new(0, 0, 1.0192306, 0)
+da.Size = UDim2.new(0, 200, 0, 100) -- Diperkecil lagi
+
+-- ====================
+-- KODE ANTI-AFK (STATUS)
+-- ====================
+
+-- Elemen TextLabel (ab) - "Status : Active"
+ab.Parent = da
+ab.BackgroundColor3 = Color3.new(0.1
