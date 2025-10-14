@@ -78,10 +78,10 @@ _b.Parent=da
 _b.BackgroundColor3=Color3.new(0, 0, 0) 
 _b.Position=UDim2.new(0,0,0.75,0) 
 _b.Size=UDim2.new(0,200,0,21) 
-_b.Font=Enum.Font.Arial 
+_b.Font=Enum.Font.SourceSans
 _b.Text="Made by VhedhanZ" 
-_b.TextColor3=Color3.new(0,1,1) 
-_b.TextSize=20 
+_b.TextColor3=Color3.new(1, 0, 0)
+_b.TextSize=16
 
 -- ====================
 -- LOGIKA FUNGSI
