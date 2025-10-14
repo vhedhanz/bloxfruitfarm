@@ -9,8 +9,8 @@ local da=Instance.new("Frame")      -- Kotak Konten (Diperbesar)
 local _b=Instance.new("TextLabel")  -- Credit
 local ab=Instance.new("TextLabel")  -- Status Anti-AFK
 
--- Instance baru untuk Ping dan Close
-local PingText = Instance.new("TextLabel")  -- Label untuk Ping
+-- Instance baru untuk FPS dan Close
+local FPSText = Instance.new("TextLabel")  -- Label untuk FPS (PENGGANTI PING)
 local CloseButton = Instance.new("TextButton") -- Tombol Close
 
 -- ====================
@@ -44,79 +44,28 @@ CloseButton.Text = "X"
 CloseButton.TextColor3 = Color3.new(1, 1, 1)
 CloseButton.TextSize = 18
 
--- Elemen Frame (da) - Kotak Konten (Ditingkatkan ukurannya)
+-- Elemen Frame (da) - Kotak Konten (Ukuran dipertahankan agar FPS muat)
 da.Parent=ca 
 da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078) 
 da.BackgroundTransparency = 0.5 
 da.Position=UDim2.new(0,0,1.0192306,0) 
-da.Size=UDim2.new(0,200,0,120) -- Diperbesar untuk Ping
+da.Size=UDim2.new(0,200,0,120) 
 
 -- ====================
--- ELEMEN KONTEN (STATUS, PING, CREDIT)
+-- ELEMEN KONTEN (STATUS, FPS, CREDIT)
 -- ====================
 
 -- Elemen TextLabel (ab) - "Status : Active" 
 ab.Parent=da 
 ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
 ab.BackgroundTransparency = 0.5
-ab.Position=UDim2.new(0,0,0.05,0) -- Disesuaikan
+ab.Position=UDim2.new(0,0,0.05,0) 
 ab.Size=UDim2.new(0,200,0,40) 
 ab.Font=Enum.Font.ArialBold 
 ab.Text="Status : Active" 
 ab.TextColor3=Color3.new(0,1,1) 
 ab.TextSize=20 
 
--- Elemen TextLabel (PingText) - Ping Status
-PingText.Parent = da
-PingText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471)
-PingText.BackgroundTransparency = 0.8
-PingText.Position = UDim2.new(0, 0, 0.4, 0) -- Di bawah status
-PingText.Size = UDim2.new(0, 200, 0, 25)
-PingText.Font = Enum.Font.SourceSans
-PingText.Text = "PING: 0 ms"
-PingText.TextColor3 = Color3.new(1, 1, 1)
-PingText.TextSize = 16
-PingText.TextXAlignment = Enum.TextXAlignment.Center
-
--- Elemen TextLabel (_b) - "Made by VhedhanZ" 
-_b.Parent=da 
-_b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471) 
-_b.BackgroundTransparency = 0.5
-_b.Position=UDim2.new(0,0,0.75,0) -- Disesuaikan
-_b.Size=UDim2.new(0,200,0,21) 
-_b.Font=Enum.Font.Arial 
-_b.Text="Made by VhedhanZ" 
-_b.TextColor3=Color3.new(0,1,1) 
-_b.TextSize=20 
-
--- ====================
--- LOGIKA FUNGSI
--- ====================
-
-local bb=game:service'VirtualUser' 
-local Players = game:service'Players'
-local LocalPlayer = Players.LocalPlayer
-
--- LOGIKA ANTI-AFK (Menggunakan connect() lama)
-LocalPlayer.Idled:connect(function() 
-    bb:CaptureController() 
-    bb:ClickButton2(Vector2.new()) 
-    ab.Text="jangan usir aku roblox !" 
-    wait(2) 
-    ab.Text="Status : Active" 
-end)
-
--- LOGIKA PING (Diambil dari statistik jaringan pemain)
--- Fungsi ini berjalan dalam thread terpisah (yield/delay)
-spawn(function()
-    while wait(1) do
-        local pingInSeconds = LocalPlayer:GetNetworkStats().NetworkIn.Ping
-        local pingInMs = math.floor(pingInSeconds * 1000)
-        PingText.Text = "PING: " .. pingInMs .. " ms"
-    end
-end)
-
--- LOGIKA TOMBOL CLOSE
-CloseButton.MouseButton1Click:connect(function()
-    ba:Destroy() -- Menghancurkan seluruh GUI
-end)
+-- Elemen TextLabel (FPSText) - FPS Status (PENGGANTI PING)
+FPSText.Parent = da
+FPSText.BackgroundColor3 = Color3.new(0.176471, 0.176471, 0.176471
